@@ -9,13 +9,15 @@ import homeAdmin from '../pages/admin/index'
 import login from '../pages/public/login'
 import index from '../pages/public/index'
 import regis from '../pages/public/regis'
+import confirmFunction from '../pages/public/confirm'
 
 const publicRoutes = [
-    { path: "/", component: index},
-    { path: "/index", component: index},
+    { path: "/", component: index },
+    { path: "/index", component: index },
     { path: "/login", component: login, layout: layoutLogin },
     { path: "/regis", component: regis, layout: layoutLogin },
-   
+    { path: "/confirm", component: confirmFunction, layout: layoutLogin },
+
 ];
 
 
@@ -25,4 +27,4 @@ const adminRoutes = [
 
 
 
-export { publicRoutes, adminRoutes};
+export { publicRoutes, adminRoutes };

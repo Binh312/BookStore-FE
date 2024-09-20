@@ -1,54 +1,53 @@
 import lich from '../../assest/images/lich.png'
 import { useState, useEffect } from 'react'
-import {getMethodByToken} from '../../services/request'
-import {formatMoney} from '../../services/money'
+import { formatMoney } from '../../services/money'
 import Chart from "chart.js/auto";
 
 
 var token = localStorage.getItem("token");
 
 
-const HomeAdmin = ()=>{
+const HomeAdmin = () => {
     const [doanhthu, setDoanhThu] = useState(0);
     const [quantri, setQt] = useState(null);
     const [doanhthuHomNay, setDoanhThuHomNay] = useState(0);
     const [donHoanThanhHomNay, setDonHoanThanhHomNay] = useState(0);
     const [items, setItems] = useState([]);
-    useEffect(()=>{
-        const getThongKe = async() =>{
-            var response = await getMethodByToken("http://localhost:8080/api/statistic/admin/revenue-this-month");
-            var result = await response.text();
-            setDoanhThu(result)
+    useEffect(() => {
+        const getThongKe = async () => {
+            // var response = await getMethodByToken("http://localhost:8080/api/statistic/admin/revenue-this-month");
+            // var result = await response.text();
+            // setDoanhThu(result)
 
-            var response = await getMethodByToken("http://localhost:8080/api/statistic/admin/revenue-today");
-            var result = await response.text();
-            setDoanhThuHomNay(result)
+            // var response = await getMethodByToken("http://localhost:8080/api/statistic/admin/revenue-today");
+            // var result = await response.text();
+            // setDoanhThuHomNay(result)
 
-            var response = await getMethodByToken("http://localhost:8080/api/statistic/admin/number-admin");
-            var result = await response.text();
-            setQt(result)
+            // var response = await getMethodByToken("http://localhost:8080/api/statistic/admin/number-admin");
+            // var result = await response.text();
+            // setQt(result)
 
-            var response = await getMethodByToken("http://localhost:8080/api/statistic/admin/number-invoice-today-finish");
-            var result = await response.text();
-            setDonHoanThanhHomNay(result)
+            // var response = await getMethodByToken("http://localhost:8080/api/statistic/admin/number-invoice-today-finish");
+            // var result = await response.text();
+            // setDonHoanThanhHomNay(result)
         };
         getThongKe();
 
-        const getProductBanChay= async() =>{
-            var response = await getMethodByToken('http://localhost:8080/api/product/public/san-pham-ban-chay');
-            var list = await response.json();
-            setItems(list)
+        const getProductBanChay = async () => {
+            // var response = await getMethodByToken('http://localhost:8080/api/product/public/san-pham-ban-chay');
+            // var list = await response.json();
+            // setItems(list)
         };
         getProductBanChay();
 
-        function getMauSac(){
-            var arr = ['#4e73df','#1cc88a','#36b9cc','#eb9534','#ed00c6','#edd500']
+        function getMauSac() {
+            var arr = ['#4e73df', '#1cc88a', '#36b9cc', '#eb9534', '#ed00c6', '#edd500']
             var act = document.getElementsByClassName("border-left");
             var lbcard = document.getElementsByClassName("lbcard");
-            for(var i=0; i<act.length; i++){
-                act[i].style.borderLeft = '.25rem solid '+arr[i]
+            for (var i = 0; i < act.length; i++) {
+                act[i].style.borderLeft = '.25rem solid ' + arr[i]
             }
-            for(var i=0; i<lbcard.length; i++){
+            for (var i = 0; i < lbcard.length; i++) {
                 lbcard[i].style.color = arr[i]
             }
         }
@@ -60,7 +59,7 @@ const HomeAdmin = ()=>{
 
 
     async function revenueYear(nam) {
-        
+
         if (nam < 2000) {
             nam = new Date().getFullYear()
         }
@@ -79,13 +78,13 @@ const HomeAdmin = ()=>{
                 list[i] = 0
             }
         }
-    
-    
+
+
         var lb = 'doanh thu năm ' + nam;
         const ctx = document.getElementById("chart").getContext('2d');
         let chartStatus = Chart.getChart("chart"); // <canvas> id
         if (chartStatus != undefined) {
-        chartStatus.destroy();
+            chartStatus.destroy();
         }
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -104,7 +103,7 @@ const HomeAdmin = ()=>{
                 scales: {
                     yAxes: [{
                         ticks: {
-                            callback: function(value) {
+                            callback: function (value) {
                                 return formatmoney(value);
                             }
                         }
@@ -113,78 +112,78 @@ const HomeAdmin = ()=>{
             },
         });
     }
-    
+
     function loadByNam() {
         var nam = document.getElementById("nams").value;
         revenueYear(nam);
     }
-    
+
     const VND = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND',
     });
-    
+
     function formatmoney(money) {
         return VND.format(money);
     }
-    
 
-  
-    return(
-       <>
-        <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left shadow h-100 py-2">
-                    <span class="lbcard">Doanh thu tháng này</span>
-                    <span className='solieudoanhthu'>{formatMoney(doanhthu)}</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left shadow h-100 py-2">
-                    <span class="lbcard">Doanh thu hôm nay</span>
-                    <span className='solieudoanhthu'>{formatMoney(doanhthuHomNay)}</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left shadow h-100 py-2">
-                    <span class="lbcard">Số lượng quản trị</span>
-                    <span className='solieudoanhthu'>{quantri}</span>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left shadow h-100 py-2">
-                    <span class="lbcard">Đơn hoàn thành hôm nay</span>
-                    <span className='solieudoanhthu'>{donHoanThanhHomNay}</span>
-                </div>
-            </div>
-        </div>
 
-        <div>
-            <div class="col-sm-12 header-sp-thongke row ">
-                <div class="col-md-3">
-                    <label class="lbbooking">Chọn năm cần xem</label>
-                    <select id="nams" class="form-control">
-                    <option id="2023">2023</option>
-                    <option id="2024">2024</option>
-                    <option id="2025">2025</option>
-                    <option id="2026">2026</option>
-                    <option id="2027">2027</option>
-                    <option id="2028">2028</option>
-                </select>
-                </div>
-                <div class="col-md-2">
-                    <label class="lbbooking whitespace" dangerouslySetInnerHTML={{__html: '<span>&ThinSpace;</span>'}}></label>
-                    <button onClick={()=>loadByNam()} class="btn btn-primary form-control"><i class="fa fa-filter"></i> Lọc</button>
-                </div>
-            </div>
-            <div class="col-sm-12 divtale">
-                <div class="card chart-container divtale">
-                    <canvas id="chart"></canvas>
-                </div>
-            </div>
-        </div>
 
-        <div class="tablediv">
+    return (
+        <>
+            <div class="row">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left shadow h-100 py-2">
+                        <span class="lbcard">Doanh thu tháng này</span>
+                        <span className='solieudoanhthu'>{formatMoney(doanhthu)}</span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left shadow h-100 py-2">
+                        <span class="lbcard">Doanh thu hôm nay</span>
+                        <span className='solieudoanhthu'>{formatMoney(doanhthuHomNay)}</span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left shadow h-100 py-2">
+                        <span class="lbcard">Số lượng quản trị</span>
+                        <span className='solieudoanhthu'>{quantri}</span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left shadow h-100 py-2">
+                        <span class="lbcard">Đơn hoàn thành hôm nay</span>
+                        <span className='solieudoanhthu'>{donHoanThanhHomNay}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="col-sm-12 header-sp-thongke row ">
+                    <div class="col-md-3">
+                        <label class="lbbooking">Chọn năm cần xem</label>
+                        <select id="nams" class="form-control">
+                            <option id="2023">2023</option>
+                            <option id="2024">2024</option>
+                            <option id="2025">2025</option>
+                            <option id="2026">2026</option>
+                            <option id="2027">2027</option>
+                            <option id="2028">2028</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="lbbooking whitespace" dangerouslySetInnerHTML={{ __html: '<span>&ThinSpace;</span>' }}></label>
+                        <button onClick={() => loadByNam()} class="btn btn-primary form-control"><i class="fa fa-filter"></i> Lọc</button>
+                    </div>
+                </div>
+                <div class="col-sm-12 divtale">
+                    <div class="card chart-container divtale">
+                        <canvas id="chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tablediv">
                 <div class="headertable">
                     <span class="lbtable">Danh sách sản phẩm bán chạy</span>
                 </div>
@@ -203,10 +202,10 @@ const HomeAdmin = ()=>{
                             </tr>
                         </thead>
                         <tbody>
-                            {items.map((item=>{
-                                    return  <tr>
+                            {items.map((item => {
+                                return <tr>
                                     <td>{item.id}</td>
-                                    <td><img src={item.imageBanner} className='imgadmin'/></td>
+                                    <td><img src={item.imageBanner} className='imgadmin' /></td>
                                     <td>{item.name}</td>
                                     <td>{formatMoney(item.price)}</td>
                                     <td>{formatMoney(item.oldPrice)}</td>
@@ -220,7 +219,7 @@ const HomeAdmin = ()=>{
                 </div>
             </div>
 
-       </>
+        </>
     );
 }
 export default HomeAdmin;

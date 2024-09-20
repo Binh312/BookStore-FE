@@ -1,15 +1,9 @@
-async function getMethod(url) {
-    const response = await fetch(url, {
-        method: 'GET'
-    });
-    var result = await response.json();
-    return result
-}
 
+var firstUrl = 'http://localhost:8080'
 async function uploadSingleFile(filePath) {
     const formData = new FormData()
     formData.append("file", filePath.files[0])
-    var urlUpload = 'http://localhost:8080/api/public/upload-file';
+    var urlUpload = firstUrl + '/api/public/upload-file';
     const res = await fetch(urlUpload, {
         method: 'POST',
         body: formData
@@ -18,11 +12,10 @@ async function uploadSingleFile(filePath) {
         var linkImage = await res.text();
         return linkImage;
     }
-    else{
+    else {
         return null;
     }
 }
-
 
 async function uploadMultipleFile(listFile) {
     const formData = new FormData()
@@ -42,7 +35,10 @@ async function uploadMultipleFile(listFile) {
 }
 
 var token = localStorage.getItem("token");
-async function getMethodByToken(url) {
+async function getMethod(url) {
+    if (url.includes(firstUrl) == false) {
+        url = firstUrl + url;
+    }
     const response = await fetch(url, {
         method: 'GET',
         headers: new Headers({
@@ -52,7 +48,10 @@ async function getMethodByToken(url) {
     return response
 }
 
-async function getMethodPostByToken(url) {
+async function postMethod(url) {
+    if (url.includes(firstUrl) == false) {
+        url = firstUrl + url;
+    }
     const response = await fetch(url, {
         method: 'POST',
         headers: new Headers({
@@ -62,7 +61,10 @@ async function getMethodPostByToken(url) {
     return response
 }
 
-async function getMethodPostPayload(url, payload) {
+async function postMethodPayload(url, payload) {
+    if (url.includes(firstUrl) == false) {
+        url = firstUrl + url;
+    }
     const response = await fetch(url, {
         method: 'POST',
         headers: new Headers({
@@ -74,7 +76,10 @@ async function getMethodPostPayload(url, payload) {
     return response
 }
 
-async function getMethodDeleteByToken(url) {
+async function deleteMethod(url) {
+    if (url.includes(firstUrl) == false) {
+        url = firstUrl + url;
+    }
     const response = await fetch(url, {
         method: 'DELETE',
         headers: new Headers({
@@ -86,4 +91,4 @@ async function getMethodDeleteByToken(url) {
 
 
 
-export {getMethod,getMethodByToken, uploadSingleFile,uploadMultipleFile,getMethodPostByToken,getMethodDeleteByToken,getMethodPostPayload}
+export { getMethod, postMethod, uploadSingleFile, uploadMultipleFile, postMethodPayload, deleteMethod }
