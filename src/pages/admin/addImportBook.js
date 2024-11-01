@@ -1,7 +1,5 @@
-import lich from '../../assest/images/lich.png'
 import { useState, useEffect } from 'react'
-import { formatMoney } from '../../services/money'
-import { getMethod, postMethod, postMethodPayload, deleteMethod, uploadMultipleFile, uploadSingleFile } from '../../services/request'
+import { getMethod, postMethodPayload } from '../../services/request'
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
@@ -40,7 +38,7 @@ const AddImportBookAdmin = () => {
             });
         }
         else {
-            if (response.status == 417) {
+            if (response.status === 417) {
                 var mess = await response.json();
                 toast.error(mess.defaultMessage);
             }

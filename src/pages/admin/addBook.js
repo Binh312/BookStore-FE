@@ -1,13 +1,8 @@
-import lich from '../../assest/images/lich.png'
 import { useState, useEffect } from 'react'
-import { formatMoney } from '../../services/money'
-import { getMethod, postMethod, postMethodPayload, deleteMethod, uploadMultipleFile, uploadSingleFile } from '../../services/request'
-import ReactPaginate from 'react-paginate';
+import { getMethod, postMethodPayload, deleteMethod, uploadMultipleFile, uploadSingleFile } from '../../services/request'
 import { toast } from 'react-toastify';
-import DataTable from 'datatables.net-dt';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
-import AsyncSelect from 'react-select/async';
 import { Editor } from '@tinymce/tinymce-react';
 import React, { useRef } from 'react';
 
@@ -20,9 +15,12 @@ const AddBookAdmin = () => {
     const editorRef = useRef(null);
     const [product, setProduct] = useState(null);
     const [itemDanhmuc, setItemDanhMuc] = useState([]);
+    const [itemTacgia, setItemTacGia] = useState([]);
     const [itemNXB, setItemNXB] = useState([]);
     const [danhMucSelected, setDanhMucSelected] = useState([]);
+    const [tacGiaSelected, setTacGiaSelected] = useState([]);
     const [nxbSelected, setNxbSelected] = useState(null);
+
     useEffect(() => {
         const getProduct = async () => {
             var uls = new URL(document.URL)
@@ -33,12 +31,17 @@ const AddBookAdmin = () => {
                 setProduct(result)
                 linkbanner = result.image
                 description = result.description;
-                var cate = []
+                var cate = [];
                 for (var i = 0; i < result.bookCategories.length; i++) {
                     cate.push(result.bookCategories[i].category)
-                }
-                setDanhMucSelected(cate)
-                setNxbSelected(result.publisher)
+                };
+                var author = [];
+                for (var y = 0; y < result.bookAuthors.length; y++) {
+                    author.push(result.bookAuthors[y].author)
+                };
+                setDanhMucSelected(cate);
+                setTacGiaSelected(author);
+                setNxbSelected(result.publisher);
             }
         };
         getProduct();
@@ -49,6 +52,12 @@ const AddBookAdmin = () => {
             setItemDanhMuc(list)
         };
         getDanhMuc();
+        const getTacGia = async () => {
+            var response = await getMethod("/api/author/get-list-author");
+            var list = await response.json();
+            setItemTacGia(list)
+        };
+        getTacGia();
         const getNhaXB = async () => {
             var response = await getMethod("/api/publisher/get-list-publisher");
             var list = await response.json();
@@ -70,7 +79,7 @@ const AddBookAdmin = () => {
 
     async function deleteImage(id) {
         var con = window.confirm("Bạn muốn xóa ảnh này?");
-        if (con == false) {
+        if (con === false) {
             return;
         }
         const response = await deleteMethod('/api/book-image/delete?id=' + id)
@@ -78,7 +87,7 @@ const AddBookAdmin = () => {
             toast.success("xóa ảnh thành công!");
             document.getElementById("imgdathem" + id).style.display = 'none';
         }
-        if (response.status == 417) {
+        if (response.status === 417) {
             var result = await response.json()
             toast.warning(result.defaultMessage);
         }
@@ -99,6 +108,10 @@ const AddBookAdmin = () => {
         for (var i = 0; i < danhMucSelected.length; i++) {
             listcate.push(danhMucSelected[i].id)
         }
+        const listauthor = [];
+        for (var y = 0; y < tacGiaSelected.length; y++) {
+            listauthor.push(tacGiaSelected[y].id)
+        }
         var payload = {
             "id": id,
             "title": event.target.elements.title.value,
@@ -115,6 +128,7 @@ const AddBookAdmin = () => {
             },
             "listLink": listLinkImg,
             "listCategoryId": listcate,
+            "listAuthorId": listauthor,
         }
         console.log(payload);
 
@@ -173,6 +187,18 @@ const AddBookAdmin = () => {
                                     getOptionValue={(option) => option.id}
                                     name='danhmuc'
                                     placeholder="Chọn danh mục"
+                                />
+                                <label class="lb-form">Tác giả</label>
+                                <Select
+                                    className="select-container"
+                                    isMulti
+                                    value={tacGiaSelected}
+                                    onChange={setTacGiaSelected}
+                                    options={itemTacgia}
+                                    getOptionLabel={(option) => option.fullName}
+                                    getOptionValue={(option) => option.id}
+                                    name='tacgia'
+                                    placeholder="Chọn tác giả"
                                 />
                                 <label class="lb-form">Nhà xuất bản</label>
                                 <Select

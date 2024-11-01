@@ -5,37 +5,36 @@ import Swal from 'sweetalert2';
 
 
 
-const AddVoucherAdmin = () => {
+const AddAuthorAdmin = () => {
 
-    const [voucher, setVoucher] = useState(null);
+    const [author, setAuthor] = useState(null);
 
     useEffect(() => {
-        const getVoucher = async () => {
+        const getAuthor = async () => {
             var uls = new URL(document.URL)
             var id = uls.searchParams.get("id");
             if (id != null) {
-                var response = await getMethod('http://localhost:8080/api/voucher/find-voucher?id=' + id);
+                var response = await getMethod('http://localhost:8080/api/author/find-author?id=' + id);
                 var result = await response.json();
-                setVoucher(result)
+                setAuthor(result)
 
             }
         };
-        getVoucher();
+        getAuthor();
     }, []);
 
-    async function themVoucher(event) {
+    async function themAuthor(event) {
         event.preventDefault();
-        var voucher = {
-            title: event.target.elements.title.value,
-            price: event.target.elements.price.value,
+        var author = {
+            fullName: event.target.elements.fullName.value,
         }
-        var response = await postMethodPayload("/api/voucher/create-update", voucher);
+        var response = await postMethodPayload("/api/author/create-update", author);
         if (response.status < 300) {
             Swal.fire({
                 title: "Thông báo",
-                text: "Thêm voucher thành công!",
+                text: "Thêm tác giả thành công!",
                 preConfirm: () => {
-                    window.location.href = 'voucher'
+                    window.location.href = 'author'
                 }
             });
         }
@@ -51,23 +50,20 @@ const AddVoucherAdmin = () => {
     }
 
 
-
     return (
         <div>
             <div class="col-sm-12 header-sps">
                 <div class="title-add-admin">
-                    <h4>Thêm/ cập nhật Voucher</h4>
+                    <h4>Thêm/ cập nhật Tác giả</h4>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-add">
                     <div class="form-add">
-                        <form onSubmit={themVoucher} class="row" method='post'>
+                        <form onSubmit={themAuthor} class="row" method='post'>
                             <div class="col-md-4 col-sm-12 col-12">
-                                <label class="lb-form">Tiêu đề</label>
-                                <input name="title" defaultValue={voucher?.title} class="form-control" />
-                                <label class="lb-form">Giảm giá</label>
-                                <input name="price" defaultValue={voucher?.price} class="form-control" />
+                                <label class="lb-form">Tên tác giả</label>
+                                <input name="fullName" defaultValue={author?.fullName} class="form-control" />
                                 <br />
                                 <button class="btn btn-primary form-control">Thêm/ cập nhật</button>
                             </div>
@@ -82,4 +78,4 @@ const AddVoucherAdmin = () => {
 
 
 
-export default AddVoucherAdmin;
+export default AddAuthorAdmin;

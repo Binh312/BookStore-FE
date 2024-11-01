@@ -27,16 +27,16 @@ function footer() {
               <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase fw-bold mb-4">Về chúng tôi</h6>
                 <p><a href="#!" class="text-reset">Hotline: 09723748234</a></p>
-                <p><a href="#!" class="text-reset">Email: phonestore@gmail.com</a></p>
+                <p><a href="#!" class="text-reset">Email: BookStore@gmail.com</a></p>
                 <p><a href="#!" class="text-reset">Địa chỉ cs1: Số 1, đại cồ việt, Hai Bà Trưng, Hà nội</a></p>
                 <p><a href="#!" class="text-reset">Địa chỉ cs2: Số 1, đại cồ việt, Hai Bà Trưng, Hà nội</a></p>
               </div>
               <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase fw-bold mb-4">Hỗ trợ khách hàng</h6>
-                <p><a href="#!" class="text-reset">Uy tín</a></p>
-                <p><a href="#!" class="text-reset">Chất lượng</a></p>
-                <p><a href="#!" class="text-reset">Nguồn gốc rõ ràng</a></p>
-                <p><a href="#!" class="text-reset">Giá rẻ</a></p>
+                <p><a href="#!" class="text-reset">Chính sách đổi - trả - hoàn tiền</a></p>
+                <p><a href="#!" class="text-reset">Chính sách bảo hành - bồi hoàn</a></p>
+                <p><a href="#!" class="text-reset">Chính sách vận chuyển</a></p>
+                <p><a href="#!" class="text-reset">Chính sách khách sỉ</a></p>
               </div>
               <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                 <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>

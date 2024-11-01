@@ -1,7 +1,5 @@
-import lich from '../../assest/images/lich.png'
 import { useState, useEffect } from 'react'
-import { formatMoney } from '../../services/money'
-import { getMethod, postMethod, postMethodPayload, deleteMethod } from '../../services/request'
+import { getMethod, deleteMethod } from '../../services/request'
 import ReactPaginate from 'react-paginate';
 import { toast } from 'react-toastify';
 
@@ -33,37 +31,19 @@ const VoucherAdmin = () => {
         setCurrentPage(currentPage)
     }
 
-    async function handleCreateClick(data) {
-        var response = await postMethodPayload("/api/voucher/create-update", data)
-        if (response.status < 300) {
-            var result = await response.text();
-            toast.success(result);
-            reloadData();
-        }
-        else {
-            if (response.status == 417) {
-                var result = await response.json()
-                toast.error(result.defaultMessage)
-            }
-            else {
-                toast.error("Thất bại")
-            }
-        }
-    }
-
     async function handleDeleteClick(id) {
         var con = window.confirm("Bạn muốn xóa voucher này?");
-        if (con == false) {
+        if (con === false) {
             return;
         }
-        var response = await deleteMethod("/api/voucher/get-all-voucher?id=" + id)
+        var response = await deleteMethod("/api/voucher/delete?id=" + id)
         if (response.status < 300) {
             var result = await response.text();
             toast.success(result);
             reloadData();
         }
         else {
-            if (response.status == 417) {
+            if (response.status === 417) {
                 var result = await response.json()
                 toast.error(result.defaultMessage)
             }
@@ -82,7 +62,7 @@ const VoucherAdmin = () => {
     return (
         <>
             <div>
-                <button data-bs-toggle="modal" data-bs-target="#addtk" class="btn btn-primary ms-2"><i className='fa fa-plus'></i></button>
+                <a href='addVoucher' class="btn btn-primary ms-2"><i className='fa fa-plus'></i></a>
             </div>
 
             <div class="tablediv">
@@ -102,7 +82,7 @@ const VoucherAdmin = () => {
                         </thead>
                         <tbody>
                             {items.map((item => {
-                                var btn = <button onClick={() => handleCreateClick(item.data)} class="btn btn-primary"><i class="fa fa-edit"></i></button>;
+                                var btn = <a href={'addVoucher?id=' + item.id} class="btn btn-primary"><i class="fa fa-edit"></i></a>;
                                 var btn2 = <button onClick={() => handleDeleteClick(item.id)} class="btn btn-danger"><i class="fa fa-trash"></i></button>
 
 

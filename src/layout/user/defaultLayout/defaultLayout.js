@@ -1,12 +1,12 @@
 import Headers from "../header/header";
 import Footer from "../footer/footer"
 
-function DefaultLayout({children}){
+function DefaultLayout({ children }) {
     return (
         <div>
-            <Headers/>
+            <Headers />
             {children}
-            <Footer/>
+            <Footer />
         </div>
     );
 }

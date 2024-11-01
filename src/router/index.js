@@ -12,6 +12,10 @@ import VoucherAdmin from '../pages/admin/voucher'
 import AddBookAdmin from '../pages/admin/addBook'
 import ImportBookAdmin from '../pages/admin/importBook'
 import AddImportBookAdmin from '../pages/admin/addImportBook'
+import AddVoucherAdmin from '../pages/admin/addVoucher'
+import AddCategoryAdmin from '../pages/admin/addCategory'
+import AddAuthorAdmin from '../pages/admin/addAuthor'
+import AddInvoiceAdmin from '../pages/admin/addInvoice'
 
 
 //public
@@ -19,6 +23,8 @@ import login from '../pages/public/login'
 import index from '../pages/public/index'
 import regis from '../pages/public/regis'
 import confirmFunction from '../pages/public/confirm'
+import profileUser from '../pages/public/profileUser'
+import bookDetail from '../pages/public/bookDetail'
 
 
 const publicRoutes = [
@@ -27,6 +33,8 @@ const publicRoutes = [
     { path: "/login", component: login, layout: layoutLogin },
     { path: "/regis", component: regis, layout: layoutLogin },
     { path: "/confirm", component: confirmFunction, layout: layoutLogin },
+    { path: "/profileUser", component: profileUser },
+    { path: "/bookDetail", component: bookDetail },
 
 ];
 
@@ -42,6 +50,11 @@ const adminRoutes = [
     { path: "/admin/addBook", component: AddBookAdmin, layout: layoutAdmin },
     { path: "/admin/importBook", component: ImportBookAdmin, layout: layoutAdmin },
     { path: "/admin/addImportBook", component: AddImportBookAdmin, layout: layoutAdmin },
+    { path: "/admin/addVoucher", component: AddVoucherAdmin, layout: layoutAdmin },
+    { path: "/admin/addCategory", component: AddCategoryAdmin, layout: layoutAdmin },
+    { path: "/admin/addAuthor", component: AddAuthorAdmin, layout: layoutAdmin },
+    { path: "/admin/addInvoice", component: AddInvoiceAdmin, layout: layoutAdmin },
+
 ];
 
 

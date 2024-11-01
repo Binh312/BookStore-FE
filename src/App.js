@@ -6,7 +6,7 @@ import AdminLayout from './layout/admin/Layout'
 
 function App() {
   // let checkAdmin = window.location.pathname.startsWith("/admin")
-  // let checkEmployee = window.location.pathname.startsWith("/employee")
+
   return (
     <Router>
       <div className="App">

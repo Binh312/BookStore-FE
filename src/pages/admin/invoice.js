@@ -33,27 +33,9 @@ const InvoiceAdmin = () => {
         setCurrentPage(currentPage)
     }
 
-    async function handleCreateClick(data) {
-        var response = await postMethodPayload("/api/invoice/create-update", data)
-        if (response.status < 300) {
-            var result = await response.text();
-            toast.success(result);
-            reloadData();
-        }
-        else {
-            if (response.status == 417) {
-                var result = await response.json()
-                toast.error(result.defaultMessage)
-            }
-            else {
-                toast.error("Thất bại")
-            }
-        }
-    }
-
     async function handleDeleteClick(id) {
         var con = window.confirm("Bạn muốn xóa hóa đơn này?");
-        if (con == false) {
+        if (con === false) {
             return;
         }
         var response = await deleteMethod("/api/invoice/delete?id=" + id)
@@ -63,7 +45,7 @@ const InvoiceAdmin = () => {
             reloadData();
         }
         else {
-            if (response.status == 417) {
+            if (response.status === 417) {
                 var result = await response.json()
                 toast.error(result.defaultMessage)
             }
@@ -82,7 +64,7 @@ const InvoiceAdmin = () => {
     return (
         <>
             <div>
-                <button data-bs-toggle="modal" data-bs-target="#addtk" class="btn btn-primary ms-2"><i className='fa fa-plus'></i></button>
+                {/* <a href='addInvoice' class="btn btn-primary ms-2"><i className='fa fa-plus'></i></a> */}
             </div>
             <div class="tablediv">
                 <div class="headertable">
@@ -106,7 +88,7 @@ const InvoiceAdmin = () => {
                         </thead>
                         <tbody>
                             {items.map((item => {
-                                var btn = <button onClick={() => handleCreateClick(item.data)} class="btn btn-primary"><i class="fa fa-edit"></i></button>;
+                                // var btn = <a href={'addInvoice?id=' + item.id} class="btn btn-primary"><i class="fa fa-edit"></i></a>;
                                 var btn2 = <button onClick={() => handleDeleteClick(item.id)} class="btn btn-danger"><i class="fa fa-trash"></i></button>
 
                                 return <tr>
@@ -120,7 +102,7 @@ const InvoiceAdmin = () => {
                                     {/* <td>{item.user}</td>
                                     <td>{item.voucher}</td> */}
                                     <td class="sticky-col button-action">
-                                        {btn}
+                                        {/* {btn} */}
                                         {btn2}
                                     </td>
                                 </tr>

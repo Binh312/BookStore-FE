@@ -1,7 +1,5 @@
-import lich from '../../assest/images/lich.png'
 import { useState, useEffect } from 'react'
-import { formatMoney } from '../../services/money'
-import { getMethod, postMethod, postMethodPayload, deleteMethod } from '../../services/request'
+import { getMethod, deleteMethod } from '../../services/request'
 import ReactPaginate from 'react-paginate';
 import { toast } from 'react-toastify';
 

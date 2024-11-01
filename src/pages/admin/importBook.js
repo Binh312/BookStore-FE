@@ -1,7 +1,7 @@
-import lich from '../../assest/images/lich.png'
+// import lich from '../../assest/images/lich.png'
 import { useState, useEffect } from 'react'
-import { formatMoney } from '../../services/money'
-import { getMethod, postMethod, postMethodPayload, deleteMethod } from '../../services/request'
+// import { formatMoney } from '../../services/money'
+import { getMethod, deleteMethod } from '../../services/request'
 import ReactPaginate from 'react-paginate';
 import { toast } from 'react-toastify';
 
@@ -13,7 +13,7 @@ const ImportBookAdmin = () => {
     const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
-        const getBook = async () => {
+        const getImportBook = async () => {
             var response = await getMethod('/api/import-book/get-all-Import-book?size=5&page=' + 0);
             var result = await response.json();
             console.log(result);
@@ -21,7 +21,7 @@ const ImportBookAdmin = () => {
             setTotalPage(result.totalPages)
             url = '/api/import-book/get-all-Import-book?size=5&page=';
         };
-        getBook();
+        getImportBook();
     }, []);
 
     const handlePageClick = async (data) => {
@@ -35,7 +35,7 @@ const ImportBookAdmin = () => {
 
     async function handleDeleteClick(id) {
         var con = window.confirm("Bạn muốn xóa đơn nhập sách này?");
-        if (con == false) {
+        if (con === false) {
             return;
         }
         var response = await deleteMethod("/api/import-book/delete?id=" + id)
@@ -45,7 +45,7 @@ const ImportBookAdmin = () => {
             reloadData();
         }
         else {
-            if (response.status == 417) {
+            if (response.status === 417) {
                 var result = await response.json()
                 toast.error(result.defaultMessage)
             }

@@ -1,4 +1,3 @@
-import '../styleUser/style.scss';
 import logo from '../../../assest/images/logo.png';
 import cart from '../../../assest/images/cartheader.png';
 import avatar from '../../../assest/images/user.svg'
@@ -11,11 +10,26 @@ export const HeaderContext = createContext();
 
 function Header() {
     const [isCssLoaded, setCssLoaded] = useState(false);
+    const [items, setItems] = useState([]);
+
     var [numCart, setNumCart] = useState(0);
 
     useEffect(() => {
         import('../styleUser/style.scss').then(() => setCssLoaded(true));
+        const getProfile = async () => {
+            // var url = new URL(document.URL)
+            // var id = url.searchParams.get("id");
+
+            // if (id != null) {
+            var response = await getMethod('http://localhost:8080/api/user/admin/get-all-user');
+            var result = await response.json();
+            setItems(result)
+            console.log(result)
+            // }
+        };
+        getProfile();
     }, []);
+
     if (!isCssLoaded) {
         return <></>
     }
@@ -29,15 +43,18 @@ function Header() {
     var authen = <li><a id="login-modal" href="/login">Đăng nhập</a></li>
     if (token != null) {
         authen = <>
-            <li><a id="login-modal" href="account">Tài khoản</a></li>
+
+            <li><a id="login-modal" href='profileUser'  >Tài khoản</a></li>
+
             <li onClick={() => logout()}><a id="login-modal" href="#">Đăng xuất</a></li></>
     }
+
     return (
         <div id="headerweb">
             <div class="subheader">
                 <div class="container subcontainerheader">
                     <ul>
-                        <li><a href="/blog">Bài viết</a></li>
+
                         <li><a href="">Địa chỉ cửa hàng</a></li>
                         <li><a href="/kiemtradonhang">Tra cứu đơn hàng</a></li>
                         {authen}
