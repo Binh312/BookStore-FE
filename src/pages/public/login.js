@@ -42,10 +42,10 @@ function login() {
             var user = result.user;
             window.localStorage.setItem("token", token);
             window.localStorage.setItem("user", JSON.stringify(user));
-            if (user.role == "ROLE_ADMIN") {
+            if (user.role === "ROLE_ADMIN") {
                 window.location.href = '/admin/index'
             }
-            else if (user.role == "ROLE_USER") {
+            else if (user.role === "ROLE_USER") {
                 window.location.href = '/index'
             }
         }

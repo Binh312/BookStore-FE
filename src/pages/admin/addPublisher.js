@@ -5,40 +5,41 @@ import Swal from 'sweetalert2';
 
 
 
-const AddVoucherAdmin = () => {
+const AddPublisherAdmin = () => {
 
-    const [voucher, setVoucher] = useState(null);
+    const [publisher, setPublisher] = useState(null);
 
     useEffect(() => {
-        const getVoucher = async () => {
+        const getPublisher = async () => {
             var uls = new URL(document.URL)
             var id = uls.searchParams.get("id");
             if (id != null) {
-                var response = await getMethod('http://localhost:8080/api/voucher/find-voucher?id=' + id);
+                var response = await getMethod('http://localhost:8080/api/publisher/find-publisher?id=' + id);
                 var result = await response.json();
-                setVoucher(result)
+                setPublisher(result)
 
             }
         };
-        getVoucher();
+        getPublisher();
     }, []);
 
-    async function addVoucher(event) {
+    async function addPublisher(event) {
         event.preventDefault();
         var uls = new URL(document.URL)
         var id = uls.searchParams.get("id");
-        var voucher = {
+        var publisher = {
             "id": id,
-            "title": event.target.elements.title.value,
-            "price": event.target.elements.price.value,
+            "name": event.target.elements.name.value,
+            "address": event.target.elements.address.value,
+            "phone": event.target.elements.phone.value,
         }
-        var response = await postMethodPayload("/api/voucher/create-update", voucher);
+        var response = await postMethodPayload("/api/publisher/create-update", publisher);
         if (response.status < 300) {
             Swal.fire({
                 title: "Thông báo",
-                text: "Thêm voucher thành công!",
+                text: "Thêm nhà xuất bản thành công!",
                 preConfirm: () => {
-                    window.location.href = 'voucher'
+                    window.location.href = 'publisher'
                 }
             });
         }
@@ -53,24 +54,24 @@ const AddVoucherAdmin = () => {
         }
     }
 
-
-
     return (
         <div>
             <div class="col-sm-12 header-sps">
                 <div class="title-add-admin">
-                    <h4>Thêm/ cập nhật Voucher</h4>
+                    <h4>Thêm/ cập nhật Nhà xuất bản</h4>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-add">
                     <div class="form-add">
-                        <form onSubmit={addVoucher} class="row" method='post'>
+                        <form onSubmit={addPublisher} class="row" method='post'>
                             <div class="col-md-4 col-sm-12 col-12">
-                                <label class="lb-form">Tiêu đề</label>
-                                <input name="title" defaultValue={voucher?.title} class="form-control" />
-                                <label class="lb-form">Giảm giá</label>
-                                <input name="price" defaultValue={voucher?.price} class="form-control" />
+                                <label class="lb-form">Tên nhà xuất bản</label>
+                                <input name="name" defaultValue={publisher?.name} class="form-control" />
+                                <label class="lb-form">Địa chỉ</label>
+                                <input name="address" defaultValue={publisher?.address} class="form-control" />
+                                <label class="lb-form">Số điện thoại</label>
+                                <input name="phone" defaultValue={publisher?.phone} class="form-control" />
                                 <br />
                                 <button class="btn btn-primary form-control">Thêm/ cập nhật</button>
                             </div>
@@ -85,4 +86,4 @@ const AddVoucherAdmin = () => {
 
 
 
-export default AddVoucherAdmin;
+export default AddPublisherAdmin;

@@ -23,10 +23,13 @@ const AddAuthorAdmin = () => {
         getAuthor();
     }, []);
 
-    async function themAuthor(event) {
+    async function addAuthor(event) {
         event.preventDefault();
+        var uls = new URL(document.URL)
+        var id = uls.searchParams.get("id");
         var author = {
-            fullName: event.target.elements.fullName.value,
+            "id": id,
+            "fullName": event.target.elements.fullName.value,
         }
         var response = await postMethodPayload("/api/author/create-update", author);
         if (response.status < 300) {
@@ -60,7 +63,7 @@ const AddAuthorAdmin = () => {
             <div class="col-sm-12">
                 <div class="form-add">
                     <div class="form-add">
-                        <form onSubmit={themAuthor} class="row" method='post'>
+                        <form onSubmit={addAuthor} class="row" method='post'>
                             <div class="col-md-4 col-sm-12 col-12">
                                 <label class="lb-form">Tên tác giả</label>
                                 <input name="fullName" defaultValue={author?.fullName} class="form-control" />

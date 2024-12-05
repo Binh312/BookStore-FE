@@ -24,10 +24,13 @@ const AddCategoryAdmin = () => {
 
 
 
-    async function themCategory(event) {
+    async function addCategory(event) {
         event.preventDefault();
+        var uls = new URL(document.URL)
+        var id = uls.searchParams.get("id");
         var category = {
-            name: event.target.elements.name.value,
+            "id": id,
+            "name": event.target.elements.name.value,
         }
         var response = await postMethodPayload("/api/category/create-update", category);
         if (response.status < 300) {
@@ -61,7 +64,7 @@ const AddCategoryAdmin = () => {
             <div class="col-sm-12">
                 <div class="form-add">
                     <div class="form-add">
-                        <form onSubmit={themCategory} class="row" method='post'>
+                        <form onSubmit={addCategory} class="row" method='post'>
                             <div class="col-md-4 col-sm-12 col-12">
                                 <label class="lb-form">Tên danh mục</label>
                                 <input name="name" defaultValue={category?.name} class="form-control" />

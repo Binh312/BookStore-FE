@@ -1,4 +1,3 @@
-import logofooter from '../../../assest/images/footer.png'
 
 function footer() {
   return (
@@ -28,8 +27,7 @@ function footer() {
                 <h6 class="text-uppercase fw-bold mb-4">Về chúng tôi</h6>
                 <p><a href="#!" class="text-reset">Hotline: 09723748234</a></p>
                 <p><a href="#!" class="text-reset">Email: BookStore@gmail.com</a></p>
-                <p><a href="#!" class="text-reset">Địa chỉ cs1: Số 1, đại cồ việt, Hai Bà Trưng, Hà nội</a></p>
-                <p><a href="#!" class="text-reset">Địa chỉ cs2: Số 1, đại cồ việt, Hai Bà Trưng, Hà nội</a></p>
+                <p><a href="/facilityFirst" class="text-reset">Địa chỉ cơ sở: Số 106, 153 Trường Chinh, Thanh Xuân, Hà nội</a></p>
               </div>
               <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 class="text-uppercase fw-bold mb-4">Hỗ trợ khách hàng</h6>

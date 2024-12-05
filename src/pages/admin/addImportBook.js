@@ -17,7 +17,7 @@ const AddImportBookAdmin = () => {
         getProduct();
     }, []);
 
-    async function themIB(event) {
+    async function addIB(event) {
         event.preventDefault();
         var importBook = {
             content: event.target.elements.content.value,
@@ -60,7 +60,7 @@ const AddImportBookAdmin = () => {
             <div class="col-sm-12">
                 <div class="form-add">
                     <div class="form-add">
-                        <form onSubmit={themIB} class="row" method='post'>
+                        <form onSubmit={addIB} class="row" method='post'>
                             <div class="col-md-4 col-sm-12 col-12">
                                 <label class="lb-form">Sách</label>
                                 <Select

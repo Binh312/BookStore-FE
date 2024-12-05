@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useState, useEffect } from 'react'
 import { getMethod, postMethodPayload, deleteMethod, uploadMultipleFile, uploadSingleFile } from '../../services/request'
 import { toast } from 'react-toastify';

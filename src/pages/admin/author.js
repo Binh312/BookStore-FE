@@ -78,7 +78,7 @@ const AuthorAdmin = () => {
                         </thead>
                         <tbody>
                             {items.map((item => {
-                                var btn = <a href={'addAuthor?id=' + item.id} class="btn btn-primary"><i class="fa fa-edit"></i></a>;
+                                var btn = <a href={`addAuthor?id=${item.id}`} class="btn btn-primary"><i class="fa fa-edit"></i></a>;
                                 var btn2 = <button onClick={() => handleDeleteClick(item.id)} class="btn btn-danger"><i class="fa fa-trash"></i></button>
 
                                 return <tr>

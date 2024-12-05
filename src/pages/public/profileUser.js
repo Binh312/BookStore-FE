@@ -6,23 +6,9 @@ import toast from 'react-hot-toast';
 var url = '';
 var linkavatar = '';
 function ProfileUser() {
-    const [profile, setProfile] = useState([]);
 
-    useEffect(() => {
-        const getProfile = async () => {
-            var uls = new URL(document.URL)
-            var id = uls.searchParams.get("id");
-
-            if (id != null) {
-                var response = await getMethod('http://localhost:8080/api/user/find-user?id=' + id);
-                var result = await response.json();
-                setProfile(result)
-                linkavatar = result.image
-            }
-            console.log(result)
-        };
-        getProfile();
-    }, []);
+    const infoUser = JSON.parse(window.localStorage.getItem("user"))
+    console.log(infoUser)
 
     async function updateInfo(event) {
         event.preventDefault();
@@ -67,21 +53,16 @@ function ProfileUser() {
             <div className="form-profile">
                 <form onSubmit={updateInfo} class="row" method='post'>
                     <div class="col-md-7 col-sm-12 col-12">
-                        <label class="lb-form">Ảnh đại diện</label>
-                        <input id="imgavatar" type="file" class="form-control" />
-                        <img src={profile == null ? '' : profile.avatar} className='imgavatar' />
-
-                        <label class="lb-form">Ngày tạo: {profile?.createdDate}</label>
-                        <label class="lb-form">Role: {profile?.role}</label>
-
+                        <label class="lb-form">Ngày tạo: {infoUser?.createdDate}</label>
+                        <label class="lb-form">Role: {infoUser?.role}</label>
                         <label class="lb-form">Email</label>
-                        <input name="email" defaultValue={profile?.email} class="form-control" />
-                        <label class="lb-form">Mật khẩu</label>
-                        <input name="password" defaultValue={profile?.password} class="form-control" />
+                        <input name="email" defaultValue={infoUser?.email} class="form-control" />
                         <label class="lb-form">Họ tên</label>
-                        <input name="fullName" defaultValue={profile?.fullName} class="form-control" />
+                        <input name="fullName" defaultValue={infoUser?.fullName} class="form-control" />
                         <label class="lb-form">Số điện thoại</label>
-                        <input name="phoneNumber" defaultValue={profile?.phoneNumber} class="form-control" />
+                        <input name="phoneNumber" defaultValue={infoUser?.phoneNumber} class="form-control" />
+                        <label class="lb-form">Mật khẩu</label>
+                        <input name="password" defaultValue={""} class="form-control" />
                         <br />
                         <button class="btn btn-primary form-control">Lưu lại thông tin</button>
                     </div>

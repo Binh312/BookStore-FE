@@ -57,6 +57,7 @@ function Header({ children }) {
                     <a href="category">Danh mục</a>
                     <a href="book">Sách</a>
                     <a href="author">Tác giả</a>
+                    <a href="publisher">Nhà xuất bản</a>
                     <a href="invoice">Đơn hàng</a>
                     <a href="importBook">Nhập hàng</a>
                     <a href="voucher">Voucher</a>
@@ -77,6 +78,7 @@ function Header({ children }) {
                             <img src={avatar} class="userlogo" />
                         </a>
                         <ul class="dropdown-menu listitemtk" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../profileUser"> Tài khoản</a></li>
                             <li><a class="dropdown-item" onClick={() => logout()} href="#"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
                         </ul>
                     </div>

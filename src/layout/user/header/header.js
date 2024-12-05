@@ -11,23 +11,20 @@ export const HeaderContext = createContext();
 function Header() {
     const [isCssLoaded, setCssLoaded] = useState(false);
     const [items, setItems] = useState([]);
+    const infoUser = JSON.parse(window.localStorage.getItem("user"))
 
-    var [numCart, setNumCart] = useState(0);
 
     useEffect(() => {
         import('../styleUser/style.scss').then(() => setCssLoaded(true));
-        const getProfile = async () => {
-            // var url = new URL(document.URL)
-            // var id = url.searchParams.get("id");
-
-            // if (id != null) {
-            var response = await getMethod('http://localhost:8080/api/user/admin/get-all-user');
-            var result = await response.json();
-            setItems(result)
-            console.log(result)
-            // }
+        const getCart = async () => {
+            if (infoUser) {
+                var response = await getMethod(`/api/cart/get-list-cart?userId=${infoUser.id}`)
+                var result = await response.json();
+                console.log(result)
+                setItems(result)
+            }
         };
-        getProfile();
+        getCart();
     }, []);
 
     if (!isCssLoaded) {
@@ -43,20 +40,33 @@ function Header() {
     var authen = <li><a id="login-modal" href="/login">Đăng nhập</a></li>
     if (token != null) {
         authen = <>
-
-            <li><a id="login-modal" href='profileUser'  >Tài khoản</a></li>
-
-            <li onClick={() => logout()}><a id="login-modal" href="#">Đăng xuất</a></li></>
+            {infoUser.role === "ROLE_ADMIN" ? (
+                <>
+                    <li><a href='./admin/user'>Quản trị</a></li>
+                    <li><a id="login-modal" href={`profileUser?id=${infoUser.id}`}>Tài khoản</a></li>
+                    <li onClick={() => logout()}><a id="login-modal" href="#">Đăng xuất</a></li>
+                </>
+            ) : (<>
+                <li><a id="login-modal" href={`profileUser?id=${infoUser.id}`}>Tài khoản</a></li>
+                <li onClick={() => logout()}><a id="login-modal" href="#">Đăng xuất</a></li>
+            </>)}
+        </>
     }
+
+
 
     return (
         <div id="headerweb">
             <div class="subheader">
                 <div class="container subcontainerheader">
                     <ul>
-
-                        <li><a href="">Địa chỉ cửa hàng</a></li>
-                        <li><a href="/kiemtradonhang">Tra cứu đơn hàng</a></li>
+                        <li><a href="/index">Trang chủ</a></li>
+                        <li><a href="/facilityFirst">Địa chỉ cửa hàng</a></li>
+                        <li>{infoUser ? (
+                            <a href="/kiemtradonhang">Tra cứu đơn hàng</a>
+                        ) : (
+                            <a href="/login">Tra cứu đơn hàng</a>
+                        )}</li>
                         {authen}
                     </ul>
                 </div>
@@ -65,7 +75,7 @@ function Header() {
                 <div class="headertop">
                     <div class="row">
                         <div class="col-sm-3">
-                            <a href='/'><img src={logo} class="logoheader" /></a>
+                            <a href='/index'><img src={logo} class="logoheader" /></a>
                         </div>
                         <div class="col-sm-6">
                             <form action='product' class="searchheader">
@@ -76,16 +86,36 @@ function Header() {
                         <div class="col-sm-3">
                             <div class="row">
                                 <div class="col-7">
-                                    <a class="btnkiemtradh" href="/kiemtradonhang">
-                                        <span class="icon"><i class="fa fa-truck"></i></span>
-                                        <span class="text">Kiểm tra đơn hàng</span>
-                                    </a>
+                                    {infoUser ? (
+                                        // Hiển thị khi có user
+                                        <a class="btnkiemtradh" href="/kiemtradonhang">
+                                            <span class="icon"><i class="fa fa-truck"></i></span>
+                                            <span class="text">Kiểm tra đơn hàng</span>
+                                        </a>
+                                    ) : (
+                                        // Hiển thị khi không có user
+                                        <a class="btnkiemtradh" href="/login">
+                                            <span class="icon"><i class="fa fa-truck"></i></span>
+                                            <span class="text">Kiểm tra đơn hàng</span>
+                                        </a>
+                                    )}
                                 </div>
                                 <div class="col-5">
                                     <div class="shoppingcartheader">
                                         <div class="shopingcontentcart">
-                                            <a href="cart"><img src={cart} class="imgcartheader" /></a>
-                                            <span id='soluongcart' class="cart-total">{numCart}</span>
+                                            {infoUser ? (
+                                                // Hiển thị khi có user
+                                                <>
+                                                    <a href={`cart?userId=${infoUser.id}`}><img src={cart} class="imgcartheader" /></a>
+                                                </>
+                                            ) : (
+                                                // Hiển thị khi không có user
+                                                <>
+                                                    <a href={`/login`}><img src={cart} class="imgcartheader" /></a>
+                                                </>
+                                            )}
+                                            <span id='soluongcart' class="cart-total">{items.length}</span>
+
                                         </div>
                                     </div>
                                 </div>

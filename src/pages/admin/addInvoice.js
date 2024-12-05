@@ -32,16 +32,18 @@ const AddInvoiceAdmin = () => {
         getInvoiceStatuses();
     }, []);
 
-    async function themInvoice(event) {
+    async function addInvoice(event) {
         event.preventDefault();
+        var uls = new URL(document.URL)
+        var id = uls.searchParams.get("id");
         var invoice = {
-            totalAmount: event.target.elements.totalAmount.value,
-            contact: event.target.elements.contact.value,
-            address: event.target.elements.address.value,
-            invoiceStatus: event.target.elements.invoiceStatus.value,
-
-            payType: event.target.elements.payType.value,
-            voucher: {
+            "id": id,
+            "totalAmount": event.target.elements.totalAmount.value,
+            "contact": event.target.elements.contact.value,
+            "address": event.target.elements.address.value,
+            "invoiceStatus": event.target.elements.invoiceStatus.value,
+            "payType": event.target.elements.payType.value,
+            "voucher": {
                 id: event.target.elements.voucher.value
             }
         }
@@ -78,7 +80,7 @@ const AddInvoiceAdmin = () => {
             <div class="col-sm-12">
                 <div class="form-add">
                     <div class="form-add">
-                        <form onSubmit={themInvoice} class="row" method='post'>
+                        <form onSubmit={addInvoice} class="row" method='post'>
                             <div class="col-md-4 col-sm-12 col-12">
                                 <label class="lb-form">Tổng tiền</label>
                                 <input name="totalAmount" class="form-control" />

@@ -5,21 +5,21 @@ import { toast } from 'react-toastify';
 
 
 var url = '';
-const CategoryAdmin = () => {
+const PublisherAdmin = () => {
     const [items, setItems] = useState([]);
     const [totalPage, setTotalPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
-        const getCategory = async () => {
-            var response = await getMethod('/api/category/get-all-category?size=5&page=' + 0);
+        const getPublisher = async () => {
+            var response = await getMethod('/api/publisher/get-all-publisher?size=5&page=' + 0);
             var result = await response.json();
-            console.log(result);
+            console.log('result: ', result);
             setItems(result.content)
             setTotalPage(result.totalPages)
-            url = '/api/category/get-all-category?size=5&page=';
+            url = '/api/publisher/get-all-publisher?size=5&page=';
         };
-        getCategory();
+        getPublisher();
     }, []);
 
     const handlePageClick = async (data) => {
@@ -32,11 +32,11 @@ const CategoryAdmin = () => {
     }
 
     async function handleDeleteClick(id) {
-        var con = window.confirm("Bạn muốn xóa danh mục này?");
+        var con = window.confirm("Bạn muốn xóa nhà xuất bản này?");
         if (con === false) {
             return;
         }
-        var response = await deleteMethod("/api/category/delete?id=" + id)
+        var response = await deleteMethod('/api/publisher/delete?id=' + id)
         if (response.status < 300) {
             var result = await response.text();
             toast.success(result);
@@ -62,28 +62,32 @@ const CategoryAdmin = () => {
     return (
         <>
             <div>
-                <a href='addCategory' class="btn btn-primary ms-2"><i className='fa fa-plus'></i></a>
+                <a href='addPublisher' class="btn btn-primary ms-2"><i className='fa fa-plus'></i></a>
             </div>
             <div class="tablediv">
                 <div class="headertable">
-                    <span class="lbtable">Danh sách danh mục</span>
+                    <span class="lbtable">Danh sách nhà xuất bản</span>
                 </div>
                 <div class="divcontenttable">
                     <table id="example" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>id</th>
-                                <th>Tên danh mục</th>
+                                <th>Tên nhà xuất bản</th>
+                                <th>Địa chỉ</th>
+                                <th>Số điện thoại</th>
                             </tr>
                         </thead>
                         <tbody>
                             {items.map((item => {
-                                var btn = <a href={`addCategory?id=${item.id}`} class="btn btn-primary"><i class="fa fa-edit"></i></a>;
+                                var btn = <a href={`addPublisher?id=${item.id}`} class="btn btn-primary"><i class="fa fa-edit"></i></a>;
                                 var btn2 = <button onClick={() => handleDeleteClick(item.id)} class="btn btn-danger"><i class="fa fa-trash"></i></button>
 
                                 return <tr>
                                     <td>{item.id}</td>
                                     <td>{item.name}</td>
+                                    <td>{item.address}</td>
+                                    <td>{item.phone}</td>
                                     <td class="sticky-col button-action">
                                         {btn}
                                         {btn2}
@@ -114,4 +118,4 @@ const CategoryAdmin = () => {
         </>
     );
 }
-export default CategoryAdmin;
+export default PublisherAdmin;

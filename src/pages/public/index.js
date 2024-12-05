@@ -25,7 +25,7 @@ function Home() {
 
   useEffect(() => {
     const getBook = async () => {
-      var response = await getMethod('/api/book/get-all-book?size=10&page=' + 0);
+      var response = await getMethod(`/api/book/get-all-book?size=10&page=${0}`);
       var result = await response.json();
       console.log(result);
       setItems(result.content)
@@ -94,35 +94,38 @@ function Home() {
         <div className='row'>
           {items.map((item => {
             return <div className='col-lg-20p col-md-3 col-sm-6 col-12'>
-              <a href={'/bookDetail'} className='taga'>
-                <img src={item.image} className='imgproductindex' />
-                <span className='tenspindex'>{item.title}</span>
-                <div class="priceproduct">
-                  <strong className='newprice'>{formatMoney(item.price)}</strong>
-                  <span class="oldprice">{item.oldPrice == null ? '' : formatMoney(item.oldPrice)}</span>
-                </div>
-              </a>
+              <div className="box-content-item">
+                <a href={`bookDetail?id=${item.id}`} className='content-product'>
+                  <img src={item.image} className="imgproductindex" alt='' />
+                  <span className='tenspindex'>{item.title}</span>
+                  <div class="priceproduct">
+                    <strong className='newprice'>{formatMoney(item.price)}</strong>
+                    <span class="oldprice">{item.oldPrice == null ? '' : formatMoney(item.oldPrice)}</span>
+                  </div>
+                </a>
+              </div>
             </div>
-
           }))}
         </div>
       </div>
-      <ReactPaginate
-        marginPagesDisplayed={2}
-        pageCount={totalPage}
-        onPageChange={handlePageClick}
-        containerClassName={'pagination'}
-        pageClassName={'page-item'}
-        pageLinkClassName={'page-link'}
-        previousClassName='page-item'
-        previousLinkClassName='page-link'
-        nextClassName='page-item'
-        nextLinkClassName='page-link'
-        breakClassName='page-item'
-        breakLinkClassName='page-link'
-        previousLabel='Trang trước'
-        nextLabel='Trang sau'
-        activeClassName='active' />
+      <div className="tab-page-index">
+        <ReactPaginate
+          marginPagesDisplayed={2}
+          pageCount={totalPage}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName='page-item'
+          previousLinkClassName='page-link'
+          nextClassName='page-item'
+          nextLinkClassName='page-link'
+          breakClassName='page-item'
+          breakLinkClassName='page-link'
+          previousLabel='Trang trước'
+          nextLabel='Trang sau'
+          activeClassName='active' />
+      </div>
     </div>
   );
 }

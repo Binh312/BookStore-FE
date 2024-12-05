@@ -96,7 +96,6 @@ const UserAdmin = () => {
                                 <th>id</th>
                                 <th>Tên đăng nhập</th>
                                 <th>Họ tên</th>
-                                <th>Avatar</th>
                                 <th>Số điện thoại</th>
                                 <th>Ngày tạo</th>
                                 <th>Quyền</th>
@@ -116,7 +115,6 @@ const UserAdmin = () => {
                                     <td>{item.id}</td>
                                     <td>{item.email}</td>
                                     <td>{item.fullName}</td>
-                                    <td><img class="avatar-image" src={item.avatar} /></td>
                                     <td>{item.phoneNumber}</td>
                                     <td>{item.createdDate}</td>
                                     <td>{item.role}</td>

@@ -14,8 +14,6 @@ function confirmFunction() {
         var email = uls.searchParams.get("email");
         var key = event.target.elements.key.value
 
-
-
         var response = await postMethod('/api/user/confirm?key=' + key + '&email=' + email);
         if (response.status > 300) {
             if (response.status == 417) {
